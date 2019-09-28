@@ -2,33 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class Home extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = { 
-  //     number: 25
-  //   }
-  // }
-
+  
   renderNumber = () => {
     const { number } = this.props;
     return(
       <div>{number}</div>
     )
   }
-
-  // onAdd = () => {
-  //   let { number } = this.state;
-  //   this.setState({
-  //     number: ++number
-  //   })
-  // }
-
-  // onSub = () => {
-  //   let { number } = this.state;
-  //   this.setState({
-  //     number: --number
-  //   })
-  // }
 
   renderButtons = () => {
     return(
@@ -39,7 +19,8 @@ class Home extends Component {
     )
   }
 
-  render() { 
+  render() {
+    console.log(this.props.history);
     return ( 
       <div>
         {this.renderNumber()}
@@ -51,14 +32,15 @@ class Home extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    number: state.number
+    number: state.number,
+    history: state.history
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
 return {
-  onAdd: () => dispatch({ type: 'NUM_UP' }),
-  onSub: () => dispatch({ type: 'NUM_DOWN' })
+  onAdd: () => dispatch({ type: 'NUM_UP', value:1 }),
+  onSub: () => dispatch({ type: 'NUM_DOWN', value:1 })
 }
 }
 
