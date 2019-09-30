@@ -1,28 +1,27 @@
 const initialState = {
   number: 25,
-  history: []
+  history: [],
+  incrementedValue: 1
 }
 
 const reducer = (state = initialState, action) => {
-  const newState = { ...state };
-
   switch(action.type) {
     case "NUM_UP":
       return {
         ...state,
-        number: state.number + action.value,
-        history: state.history.concat({number: state.number + action.value})
+        number: action.value,
+        history: action.history
       }
     
     case "NUM_DOWN":
       return {
         ...state,
-        number: state.number - action.value,
-        history: state.history.concat({number: state.number - action.value})
+        number: action.value,
+        history: action.history
       }
-    
-  }
-  return newState;
+    default:
+        return state;    
+  }  
 }
 
 export default reducer;

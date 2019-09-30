@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { onAddAction, onSubAction } from '../action/HomeAction';
 
 class Home extends Component {
   
@@ -10,17 +11,32 @@ class Home extends Component {
     )
   }
 
+  onAddition = () => {
+    const { number, incrementedValue, history } = this.props;
+    let updatedHistory = history;
+    const updatedValue = number + incrementedValue;
+    updatedHistory.push(updatedValue);
+    this.props.onAdd(updatedValue, updatedHistory);
+  }
+
+  onSubtraction = () => {
+    const { number, incrementedValue, history } = this.props;
+    let updatedHistory = history;
+    const updatedValue = number - incrementedValue;
+    updatedHistory.push(updatedValue);
+    this.props.onSub(updatedValue, updatedHistory);
+  }
+
   renderButtons = () => {
     return(
       <div>
-        <button onClick={this.props.onAdd}>ADD</button>
-        <button onClick={this.props.onSub}>SUB</button>
+        <button onClick={this.onAddition}>ADD</button>
+        <button onClick={this.onSubtraction}>SUB</button>
       </div>
     )
   }
 
   render() {
-    console.log(this.props.history);
     return ( 
       <div>
         {this.renderNumber()}
@@ -33,15 +49,20 @@ class Home extends Component {
 const mapStateToProps = (state) => {
   return {
     number: state.number,
-    history: state.history
+    history: state.history,
+    incrementedValue: state.incrementedValue
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
-return {
-  onAdd: () => dispatch({ type: 'NUM_UP', value:1 }),
-  onSub: () => dispatch({ type: 'NUM_DOWN', value:1 })
-}
+  return {
+    onAdd: (updatedValue, updatedHistory) => {
+      dispatch(onAddAction(updatedValue, updatedHistory))
+    },
+    onSub: (updatedValue, updatedHistory) => {
+      dispatch(onSubAction(updatedValue, updatedHistory))
+    }
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps) (Home);
