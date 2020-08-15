@@ -4,13 +4,6 @@ import { onAddAction, onSubAction } from '../action/HomeAction';
 
 class Home extends Component {
   
-  renderNumber = () => {
-    const { number } = this.props;
-    return(
-      <div>{number}</div>
-    )
-  }
-
   onAddition = () => {
     const { number, incrementedValue, history } = this.props;
     let updatedHistory = history;
@@ -30,8 +23,24 @@ class Home extends Component {
   renderButtons = () => {
     return(
       <div>
-        <button onClick={this.onAddition}>ADD</button>
-        <button onClick={this.onSubtraction}>SUB</button>
+        <button onClick={this.onAddition} className='btn btn-success'>ADD</button>
+        <button onClick={this.onSubtraction} className='btn btn-danger'>SUB</button>
+      </div>
+    )
+  }
+
+  renderNumber = () => {
+    const { number, history } = this.props;
+    return(
+      <div>
+        <h3>Number: {number}</h3>
+        <ul className="list-group">
+          {history.map((e) => (
+            <li className="list-group-item">
+              <h4>{e}</h4>
+            </li>
+          ))}
+        </ul>
       </div>
     )
   }
@@ -39,8 +48,8 @@ class Home extends Component {
   render() {
     return ( 
       <div>
-        {this.renderNumber()}
         {this.renderButtons()}
+        {this.renderNumber()}
       </div>
      );
   }
